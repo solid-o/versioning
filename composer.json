@@ -1,0 +1,48 @@
+{
+    "name": "solido/versioning",
+    "description": "Versioning utilities for REST apis",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alessandro Chitolina",
+            "email": "alekitto@gmail.com"
+        },
+        {
+            "name": "Massimiliano Braglia",
+            "email": "massimiliano.braglia@gmail.com"
+        }
+    ],
+    "scripts": {
+        "phpstan": "phpstan analyse src/ -c vendor/solido/php-coding-standards/phpstan.neon --level=8 --no-progress -vvv --memory-limit=2048M",
+        "cscheck": "vendor/bin/phpcs --standard=Solido src/",
+        "csfix": "vendor/bin/phpcbf --standard=Solido src/"
+    },
+    "require": {
+        "php": "^7.4",
+        "symfony/http-foundation": "^4.4|^5.0"
+    },
+    "require-dev": {
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpunit/phpunit": "^8.0|9.1",
+        "roave/security-advisories": "dev-master",
+        "solido/php-coding-standards": "dev-master",
+        "willdurand/negotiation": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Solido\\Versioning\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Solido\\Versioning\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "archive": {
+        "exclude": [ ".gitignore", ".travis.yml", "tests" ]
+    }
+}
