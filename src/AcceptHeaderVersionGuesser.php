@@ -7,6 +7,7 @@ namespace Solido\Versioning;
 use Negotiation\Exception\InvalidMediaType;
 use Solido\Versioning\Negotiation\VersionAwareNegotiator;
 use Symfony\Component\HttpFoundation\Request;
+
 use function assert;
 use function is_string;
 

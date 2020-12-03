@@ -7,6 +7,7 @@ namespace Solido\Versioning\Negotiation;
 use Negotiation\AcceptHeader;
 use Negotiation\BaseAccept;
 use Negotiation\Exception\InvalidMediaType;
+
 use function count;
 use function explode;
 

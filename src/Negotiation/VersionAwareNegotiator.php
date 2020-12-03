@@ -7,6 +7,7 @@ namespace Solido\Versioning\Negotiation;
 use Negotiation\Accept;
 use Negotiation\Exception\InvalidArgument;
 use Negotiation\Exception\InvalidHeader;
+
 use function array_filter;
 use function array_intersect_assoc;
 use function array_map;
