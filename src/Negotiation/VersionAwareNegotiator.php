@@ -66,9 +66,9 @@ class VersionAwareNegotiator
         $priorities = array_map([$this, 'priorityFactory'], $priorities);
 
         $matches = $this->findMatches($headers, $priorities);
-        $specificMatches = array_reduce($matches, Match::class . '::reduce', []);
+        $specificMatches = array_reduce($matches, AcceptMatch::class . '::reduce', []);
 
-        usort($specificMatches, Match::class . '::compare');
+        usort($specificMatches, AcceptMatch::class . '::compare');
 
         $match = array_shift($specificMatches);
 
@@ -87,7 +87,7 @@ class VersionAwareNegotiator
      * @param string|int $index
      * @param string|int $headerIndex
      */
-    protected function match(Accept $accept, Priority $priority, $index, $headerIndex): ?Match
+    protected function match(Accept $accept, Priority $priority, $index, $headerIndex): ?AcceptMatch
     {
         $ab = $accept->getBasePart();
         $pb = $priority->getBasePart();
@@ -109,7 +109,7 @@ class VersionAwareNegotiator
                 $score += (int) ($accept->getQuality() * 100);
             }
 
-            $match = new Match($accept->getQuality(), $score, $index);
+            $match = new AcceptMatch($accept->getQuality(), $score, $index);
             $match->headerIndex = $headerIndex;
 
             return $match;
@@ -137,7 +137,7 @@ class VersionAwareNegotiator
      * @param Accept[] $headerParts
      * @param Priority[] $priorities  Configured priorities
      *
-     * @return Match[] Headers matched
+     * @return AcceptMatch[] Headers matched
      */
     private function findMatches(array $headerParts, array $priorities): array
     {

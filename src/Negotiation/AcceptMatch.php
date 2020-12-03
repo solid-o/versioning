@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Solido\Versioning\Negotiation;
 
-final class Match
+final class AcceptMatch
 {
     public float $quality;
     public int $score;
@@ -25,7 +25,7 @@ final class Match
         $this->index   = $index;
     }
 
-    public static function compare(Match $a, Match $b): int
+    public static function compare(AcceptMatch $a, AcceptMatch $b): int
     {
         if ($a->quality !== $b->quality) {
             return $a->quality > $b->quality ? -1 : 1;
@@ -39,12 +39,12 @@ final class Match
     }
 
     /**
-     * @param Match[] $carry reduced array
-     * @param Match $match match to be reduced
+     * @param AcceptMatch[] $carry reduced array
+     * @param AcceptMatch   $match match to be reduced
      *
-     * @return Match[]
+     * @return AcceptMatch[]
      */
-    public static function reduce(array $carry, Match $match): array
+    public static function reduce(array $carry, AcceptMatch $match): array
     {
         if (! isset($carry[$match->index]) || $carry[$match->index]->score < $match->score) {
             $carry[$match->index] = $match;
