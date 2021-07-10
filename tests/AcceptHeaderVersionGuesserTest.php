@@ -22,6 +22,15 @@ class AcceptHeaderVersionGuesserTest extends TestCase
         self::assertEquals('1.0', $guesser->guess(new ServerRequest('GET', '/'), '1.0'));
     }
 
+    public function testShouldReturnDefaultIfRequestObjectIsNotSupported(): void
+    {
+        $guesser = new AcceptHeaderVersionGuesser();
+
+        self::assertNull($guesser->guess(new \stdClass(), null));
+        self::assertEquals('20200514', $guesser->guess(new \stdClass(), '20200514'));
+        self::assertEquals('1.0', $guesser->guess(new \stdClass(), '1.0'));
+    }
+
     public function testShouldReturnTheVersionInAcceptHeader(): void
     {
         $guesser = new AcceptHeaderVersionGuesser();
