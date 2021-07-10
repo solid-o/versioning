@@ -5,37 +5,42 @@ declare(strict_types=1);
 namespace Solido\Versioning;
 
 use Negotiation\Exception\InvalidMediaType;
+use Solido\Common\AdapterFactory;
+use Solido\Common\AdapterFactoryInterface;
+use Solido\Common\Exception\UnsupportedRequestObjectException;
 use Solido\Versioning\Negotiation\VersionAwareNegotiator;
-use Symfony\Component\HttpFoundation\Request;
-
-use function assert;
-use function is_string;
 
 class AcceptHeaderVersionGuesser implements VersionGuesserInterface
 {
     /** @var string[] */
     private array $priorities;
+    private AdapterFactoryInterface $adapterFactory;
 
     /**
      * @param string[] $priorities
      */
-    public function __construct(array $priorities = ['*/*'])
+    public function __construct(array $priorities = ['*/*'], ?AdapterFactoryInterface $adapterFactory = null)
     {
         $this->priorities = (static fn (string ...$v) => $v)(...$priorities);
+        $this->adapterFactory = $adapterFactory ?? new AdapterFactory();
     }
 
-    public function guess(Request $request, ?string $default): ?string
+    public function guess(object $request, ?string $default): ?string
     {
-        if (! $request->headers->has('Accept')) {
+        try {
+            $adapter = $this->adapterFactory->createRequestAdapter($request);
+        } catch (UnsupportedRequestObjectException $e) {
             return $default;
         }
 
-        $requestHeader = $request->headers->get('Accept', '');
-        assert(is_string($requestHeader));
+        $acceptHeader = $adapter->getHeader('Accept')[0] ?? null;
+        if ($acceptHeader === null) {
+            return $default;
+        }
 
         $negotiator = new VersionAwareNegotiator();
         try {
-            $header = $negotiator->getBest($requestHeader, $this->priorities);
+            $header = $negotiator->getBest($acceptHeader, $this->priorities);
         } catch (InvalidMediaType $exception) {
             return $default;
         }

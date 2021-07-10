@@ -1,7 +1,9 @@
 name: PHPStan
 
 on:
+    push:
     pull_request:
+        types: [opened]
 
 jobs:
     build:
@@ -14,7 +16,7 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     coverage: none
-                    php-version: "7.4"
+                    php-version: "8.0"
                     tools: cs2pr
 
             -   name: Cache dependencies installed with composer
@@ -27,5 +29,9 @@ jobs:
             -   name: Install dependencies with composer
                 run: composer update --no-progress --no-suggest --no-interaction --prefer-dist
 
+            -   if: ${{ github.base_ref == '' }}
+                run: composer phpstan
+
             -   name: Run a static analysis with phpstan/phpstan
-                run: php vendor/bin/phpstan analyse src/ -c vendor/solido/php-coding-standards/phpstan.neon --level=8 --no-progress -vvv --memory-limit=2048M --error-format=checkstyle | cs2pr
+                if: ${{ github.base_ref != '' }}
+                run: composer phpstan --error-format=checkstyle | cs2pr
