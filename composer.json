@@ -23,6 +23,7 @@
         "solido/common": "*"
     },
     "require-dev": {
+        "nyholm/psr7": "^1.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.4",
         "roave/security-advisories": "dev-master",
