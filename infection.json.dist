@@ -1,0 +1,43 @@
+{
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "infection\/infection.log",
+        "html": "infection\/infection.html"
+    },
+    "mutators": {
+        "global-ignoreSourceCodeByRegex": [
+            "assert.*",
+            ".*class_exists.*"
+        ],
+        "global-ignore": [
+            "Solido\\Common\\Urn\\Urn::parseUrn"
+        ],
+        "@default": true,
+        "DecrementInteger": {
+            "ignoreSourceCodeByRegex": [
+                ".*json_decode.*"
+            ]
+        },
+        "IncrementInteger": {
+            "ignoreSourceCodeByRegex": [
+                ".*json_decode.*"
+            ]
+        },
+        "GreaterThanOrEqualTo": {
+            "ignoreSourceCodeByRegex": [
+                ".*PHP_VERSION_ID.*"
+            ]
+        },
+        "GreaterThanOrEqualToNegotiation": {
+            "ignoreSourceCodeByRegex": [
+                ".*PHP_VERSION_ID.*"
+            ]
+        }
+    },
+    "minMsi": 95,
+    "minCoveredMsi": 95
+}

@@ -20,7 +20,7 @@
     },
     "require": {
         "php": "^7.4 || ^8.0",
-        "solido/common": "*"
+        "solido/common": "^0.2 || ^0.3"
     },
     "require-dev": {
         "nyholm/psr7": "^1.0",
@@ -28,7 +28,7 @@
         "phpunit/phpunit": "^9.4",
         "roave/security-advisories": "dev-master",
         "solido/php-coding-standards": "dev-master",
-        "symfony/http-foundation": "^4.4 || ^5.0",
+        "symfony/http-foundation": "^4.4 || ^5.0 || ^6.0",
         "willdurand/negotiation": "^2.3 || ^3.0"
     },
     "autoload": {
@@ -42,14 +42,18 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
     },
     "archive": {
         "exclude": [ ".gitignore", ".travis.yml", "tests" ]
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.2.x-dev"
+            "dev-master": "0.3.x-dev"
         }
     }
 }
