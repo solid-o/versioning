@@ -52,7 +52,7 @@ class VersionAwareNegotiator
      *
      * @return Priority|null best matching type
      */
-    public function getBest(string $header, array $priorities): ?Priority
+    public function getBest(string $header, array $priorities): Priority|null
     {
         if (empty($priorities)) {
             throw new InvalidArgument('A set of server priorities should be given.');
@@ -84,11 +84,7 @@ class VersionAwareNegotiator
         return $priority;
     }
 
-    /**
-     * @param string|int $index
-     * @param string|int $headerIndex
-     */
-    protected function match(Accept $accept, Priority $priority, $index, $headerIndex): ?AcceptMatch
+    protected function match(Accept $accept, Priority $priority, string|int $index, string|int $headerIndex): AcceptMatch|null
     {
         $ab = $accept->getBasePart();
         $pb = $priority->getBasePart();

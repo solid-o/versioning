@@ -15,11 +15,12 @@ class Priority extends BaseAccept implements AcceptHeader
 {
     private string $basePart;
     private string $subPart;
-    private ?string $version;
+    private string|null $version;
 
     public function __construct(string $value)
     {
         parent::__construct($value);
+
         $parts = explode('/', $this->type);
 
         if (count($parts) !== 2 || ! $parts[0] || ! $parts[1]) {
@@ -40,12 +41,12 @@ class Priority extends BaseAccept implements AcceptHeader
         return $this->subPart;
     }
 
-    public function setVersion(?string $version): void
+    public function setVersion(string|null $version): void
     {
         $this->version = $version;
     }
 
-    public function getVersion(): ?string
+    public function getVersion(): string|null
     {
         return $this->version;
     }

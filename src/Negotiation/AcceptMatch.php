@@ -6,23 +6,10 @@ namespace Solido\Versioning\Negotiation;
 
 final class AcceptMatch
 {
-    public float $quality;
-    public int $score;
+    public string|int|null $headerIndex = null;
 
-    /** @var string|int */
-    public $index;
-
-    /** @var string|int */
-    public $headerIndex = null;
-
-    /**
-     * @param string|int $index
-     */
-    public function __construct(float $quality, int $score, $index)
+    public function __construct(public float $quality, public int $score, public string|int $index)
     {
-        $this->quality = $quality;
-        $this->score   = $score;
-        $this->index   = $index;
     }
 
     public static function compare(AcceptMatch $a, AcceptMatch $b): int

@@ -16,20 +16,18 @@ class AcceptHeaderVersionGuesser implements VersionGuesserInterface
     private array $priorities;
     private AdapterFactoryInterface $adapterFactory;
 
-    /**
-     * @param string[] $priorities
-     */
-    public function __construct(array $priorities = ['*/*'], ?AdapterFactoryInterface $adapterFactory = null)
+    /** @param string[] $priorities */
+    public function __construct(array $priorities = ['*/*'], AdapterFactoryInterface|null $adapterFactory = null)
     {
         $this->priorities = (static fn (string ...$v) => $v)(...$priorities);
         $this->adapterFactory = $adapterFactory ?? new AdapterFactory();
     }
 
-    public function guess(object $request, ?string $default): ?string
+    public function guess(object $request, string|null $default): string|null
     {
         try {
             $adapter = $this->adapterFactory->createRequestAdapter($request);
-        } catch (UnsupportedRequestObjectException $e) {
+        } catch (UnsupportedRequestObjectException) {
             return $default;
         }
 
@@ -41,7 +39,7 @@ class AcceptHeaderVersionGuesser implements VersionGuesserInterface
         $negotiator = new VersionAwareNegotiator();
         try {
             $header = $negotiator->getBest($acceptHeader, $this->priorities);
-        } catch (InvalidMediaType $exception) {
+        } catch (InvalidMediaType) {
             return $default;
         }
 

@@ -9,5 +9,5 @@ interface VersionGuesserInterface
     /**
      * Guess the api version from the given request.
      */
-    public function guess(object $request, ?string $default): ?string;
+    public function guess(object $request, string|null $default): string|null;
 }

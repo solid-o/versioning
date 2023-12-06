@@ -10,20 +10,18 @@ use Solido\Common\Exception\UnsupportedRequestObjectException;
 
 class CustomHeaderVersionGuesser implements VersionGuesserInterface
 {
-    private string $headerName;
     private AdapterFactoryInterface $adapterFactory;
 
-    public function __construct(string $headerName = 'X-API-Version', ?AdapterFactoryInterface $adapterFactory = null)
+    public function __construct(private string $headerName = 'X-API-Version', AdapterFactoryInterface|null $adapterFactory = null)
     {
-        $this->headerName = $headerName;
         $this->adapterFactory = $adapterFactory ?? new AdapterFactory();
     }
 
-    public function guess(object $request, ?string $default): ?string
+    public function guess(object $request, string|null $default): string|null
     {
         try {
             $adapter = $this->adapterFactory->createRequestAdapter($request);
-        } catch (UnsupportedRequestObjectException $e) {
+        } catch (UnsupportedRequestObjectException) {
             return $default;
         }
 
