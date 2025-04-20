@@ -17,9 +17,9 @@ use function array_values;
 use function assert;
 use function count;
 use function Safe\preg_match_all;
-use function Safe\sprintf;
-use function Safe\usort;
+use function sprintf;
 use function strcasecmp;
+use function usort;
 
 class VersionAwareNegotiator
 {
