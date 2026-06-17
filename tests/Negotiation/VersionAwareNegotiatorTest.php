@@ -5,9 +5,10 @@ namespace Solido\Versioning\Tests\Negotiation;
 use Negotiation\Exception\InvalidArgument;
 use Negotiation\Exception\InvalidHeader;
 use Negotiation\Exception\InvalidMediaType;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 use Solido\Versioning\Negotiation\Priority;
 use Solido\Versioning\Negotiation\VersionAwareNegotiator;
-use PHPUnit\Framework\TestCase;
 
 class VersionAwareNegotiatorTest extends TestCase
 {
@@ -33,9 +34,7 @@ class VersionAwareNegotiatorTest extends TestCase
         $this->negotiator->priorityFactory('html');
     }
 
-    /**
-     * @dataProvider dataProviderForTestGetBest
-     */
+    #[DataProvider('dataProviderForTestGetBest')]
     public function testGetBest(string $header, array $priorities, $expected): void
     {
         try {

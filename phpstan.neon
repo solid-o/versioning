@@ -1,0 +1,5 @@
+includes:
+    - vendor/solido/php-coding-standards/phpstan.neon
+
+parameters:
+    reportUnmatchedIgnoredErrors: false

@@ -14,11 +14,11 @@ use function array_map;
 use function array_reduce;
 use function array_shift;
 use function array_values;
-use function assert;
 use function count;
 use function Safe\preg_match_all;
 use function sprintf;
 use function strcasecmp;
+use function trim;
 use function usort;
 
 class VersionAwareNegotiator
@@ -78,7 +78,6 @@ class VersionAwareNegotiator
         }
 
         $priority = $priorities[$match->index];
-        assert($priority instanceof Priority);
         $priority->setVersion($headers[$match->headerIndex]->getParameter('version'));
 
         return $priority;
@@ -127,7 +126,7 @@ class VersionAwareNegotiator
             throw new InvalidHeader(sprintf('Failed to parse accept header: "%s"', $header));
         }
 
-        return array_values(array_filter(array_map('trim', $matches[0])));
+        return array_values(array_filter(array_map(trim(...), $matches[0] ?? [])));
     }
 
     /**
